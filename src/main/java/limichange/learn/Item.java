@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Item {
@@ -13,7 +14,11 @@ public class Item {
     private Integer id;
 
     @Min(value=20)
+    @NotNull
     private Integer size;
+
+    @Min(value=0)
+    @NotNull
     private Integer age;
 
     public Item() {
