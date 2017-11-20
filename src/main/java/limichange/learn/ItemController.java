@@ -7,10 +7,13 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-public class IndexController {
+public class ItemController {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping(value = "/all")
     public List<Item> all() {
@@ -52,5 +55,11 @@ public class IndexController {
         this.itemRepository.save(item);
 
         return item;
+    }
+
+    @PostMapping(value = "/insertTwo")
+    public String insertTwo() {
+        this.itemService.insertTwo();
+        return "ok";
     }
 }
