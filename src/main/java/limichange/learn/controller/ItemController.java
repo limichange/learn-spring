@@ -1,9 +1,13 @@
-package limichange.learn;
+package limichange.learn.controller;
 
+import limichange.learn.Item;
+import limichange.learn.repository.ItemRepository;
+import limichange.learn.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,27 +38,26 @@ public class ItemController {
     }
 
     @PutMapping(value = "/{id}")
-    public Item update (@PathVariable("id") Integer id,
-                        @PathParam("cup") String cup,
-                        @PathParam("age") Integer age) {
-        Item item = new Item();
+    public Item update (@PathVariable("id") Integer id, Item item) {
         item.setId(id);
-        item.setCupSize(cup);
-        item.setAge(age);
+        item.setSize(item.getSize());
+        item.setAge(item.getAge());
         this.itemRepository.save(item);
         return this.itemRepository.findOne(id);
     }
 
     @PostMapping(value = "/")
-    public Item add(@PathParam("cup") String cup, @PathParam("age") Integer age) {
-        Item item = new Item();
+    public String add(@Valid Item item, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String errorString = bindingResult.getFieldError().getDefaultMessage();
+            System.out.println(errorString);
+            return errorString;
+        }
 
-        item.setAge(age);
-        item.setCupSize(cup.trim());
-
+        item.setAge(item.getAge());
+        item.setSize(item.getSize());
         this.itemRepository.save(item);
-
-        return item;
+        return "ok";
     }
 
     @PostMapping(value = "/insertTwo")

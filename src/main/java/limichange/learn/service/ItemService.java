@@ -1,5 +1,7 @@
-package limichange.learn;
+package limichange.learn.service;
 
+import limichange.learn.Item;
+import limichange.learn.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,11 @@ public class ItemService {
     public void insertTwo() {
         Item item1 = new Item();
         item1.setAge(1);
-        item1.setCupSize("C");
+        item1.setSize(20);
 
         Item item2 = new Item();
         item2.setAge(12);
-        item2.setCupSize("D");
+        item2.setSize(20);
 
         this.itemRepository.save(item1);
         this.itemRepository.save(item2);
